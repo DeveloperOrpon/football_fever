@@ -1,3 +1,3 @@
 class AppTextStyles {
-  static const String fontFamily = 'PlusJakartaSans';
+  static const String fontFamily = 'Poppins';
 }

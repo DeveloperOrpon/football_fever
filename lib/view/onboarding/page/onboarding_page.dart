@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -6,9 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:football_fever/view/onboarding/page/get_start_page.dart';
 import 'package:football_fever/view/splash/controller/splash_controller.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 
+import '../../home/page/home_page.dart';
 import '../data/onboarding_data.dart';
 
 class OnboardingPage extends StatelessWidget {
@@ -57,43 +57,40 @@ class OnboardingPage extends StatelessWidget {
                                               .currentIndexOnBoarding.value]
                                           .bgImage,
                                     ))),
-                                  ),
-                                  AnimatedSwitcher(
-                                      switchInCurve: Curves.easeIn,
-                                      switchOutCurve: Curves.easeInOut,
-                                      reverseDuration:
-                                          const Duration(milliseconds: 200),
-                                      duration:
-                                          const Duration(milliseconds: 200),
-                                      child: Image.asset(
-                                        onBoardingData[splashController
-                                                .currentIndexOnBoarding.value]
-                                            .imageUrl,
-                                        key: ValueKey<int>(splashController
-                                            .currentIndexOnBoarding.value),
-                                        width: Get.width > 600
-                                            ? Get.width * .5
-                                            : (Get.width * 0.8),
-                                        height: Get.height * .4,
-                                        fit: BoxFit.fill,
-                                        // fit: BoxFit.contain,
-                                      ),
-                                      transitionBuilder: (child, animation) {
-                                        return FadeTransition(
-                                          opacity: animation,
-                                          child: child,
-                                        );
-                                      }),
+                                  )
+                                      .animate(
+                                          onPlay: (controller) =>
+                                              controller.repeat(reverse: true))
+                                      .scaleXY(
+                                          end: 1.0,
+                                          begin: .9,
+                                          duration: 1000.ms)
+                                      .fadeIn(),
+                                  Image.asset(
+                                    onBoardingData[splashController
+                                            .currentIndexOnBoarding.value]
+                                        .imageUrl,
+                                    key: ValueKey<int>(splashController
+                                        .currentIndexOnBoarding.value),
+                                    width: Get.width > 600
+                                        ? Get.width * .5
+                                        : (Get.width * 0.8),
+                                    height: Get.height * .4,
+                                    fit: BoxFit.fill,
+                                    // fit: BoxFit.contain,
+                                  ).animate().fadeIn(delay: 200.ms),
                                 ],
                               ),
                             );
                           }),
                           const Spacer(),
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 18.0),
-                            child: Text(
-                              textAlign: TextAlign.center,
+                            padding: EdgeInsets.symmetric(horizontal: 18.w),
+                            child: TextAnimator(
+                              incomingEffect:
+                                  WidgetTransitionEffects.incomingScaleDown(
+                                duration: const Duration(milliseconds: 1000),
+                              ),
                               e.title,
                               style: Theme.of(context)
                                   .textTheme
@@ -101,16 +98,16 @@ class OnboardingPage extends StatelessWidget {
                                   .copyWith(
                                     fontSize: 22.sp,
                                   ),
-                            ).animate().fadeIn(
-                                  delay: 300.ms,
-                                ),
+                            ),
                           ),
                           8.verticalSpace,
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 18.0),
-                            child: Text(
-                              overflow: TextOverflow.ellipsis,
+                            padding: EdgeInsets.symmetric(horizontal: 80.w),
+                            child: TextAnimator(
+                              incomingEffect: WidgetTransitionEffects
+                                  .incomingSlideInFromRight(
+                                      delay: const Duration(milliseconds: 0)),
+                              // overflow: TextOverflow.ellipsis,
                               maxLines: 3,
                               textAlign: TextAlign.center,
                               e.detail,
@@ -148,10 +145,10 @@ class OnboardingPage extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: () {
-                    Get.to(
-                      const GetStartPage(),
-                      duration: 350.ms,
-                      curve: Curves.fastLinearToSlowEaseIn,
+                    Get.offAll(
+                      const HomePage(),
+                      duration: 400.ms,
+                      transition: Transition.fadeIn,
                     );
                   },
                   child: Text(
@@ -182,20 +179,24 @@ class OnboardingPage extends StatelessWidget {
                           duration: 400.ms,
                           curve: Curves.linearToEaseOut);
                     } else {
-                      Get.to(
-                        const GetStartPage(),
-                        duration: 350.ms,
-                        curve: Curves.fastLinearToSlowEaseIn,
+                      Get.offAll(
+                        const HomePage(),
+                        duration: 400.ms,
+                        transition: Transition.fadeIn,
                       );
                     }
                   },
-                  child: Text(
-                    'Next',
-                    style: Get.theme.textTheme.titleLarge!.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: Get.theme.primaryColor,
-                    ),
-                  ),
+                  child: Obx(() {
+                    return Text(
+                      splashController.currentIndexOnBoarding.value < 1
+                          ? 'Next'
+                          : 'Done',
+                      style: Get.theme.textTheme.titleLarge!.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: Get.theme.primaryColor,
+                      ),
+                    );
+                  }),
                 ),
               ],
             ),

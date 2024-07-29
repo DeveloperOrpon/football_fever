@@ -4,6 +4,9 @@ import 'package:football_fever/view/onboarding/page/onboarding_page.dart';
 import 'package:get/get.dart';
 
 class SplashController extends GetxController {
+  //get start variable
+  RxBool isTab = RxBool(false);
+  //
   @override
   void onInit() {
     Future.delayed(const Duration(seconds: 2), () {

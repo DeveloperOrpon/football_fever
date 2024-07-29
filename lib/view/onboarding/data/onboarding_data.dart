@@ -18,13 +18,13 @@ List<OnBoardingModel> onBoardingData = [
     bgImage: 'assets/images/onboardingBGOne.png',
     title: 'Football Fever, Catch It!',
     detail:
-        "Our Go-To App For \nEverything Football. Live Scores, News,\nHighlights, And More.",
+        "Our Go-To App For Everything Football. Live Scores, News, Highlights, And More.",
   ),
   OnBoardingModel(
     imageUrl: 'assets/images/onboardingTwo.png',
     bgImage: 'assets/images/onboardingBGTwo.png',
     title: 'Feel The Rush!',
     detail:
-        "Stay Updated On Your \nFavorite Teams And Players With \nReal-Time Stats And Insights",
+        "Stay Updated On Your Favorite Teams And Players With Real-Time Stats And Insights",
   ),
 ];

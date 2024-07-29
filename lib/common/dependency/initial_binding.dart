@@ -2,6 +2,8 @@ import 'package:football_fever/common/controller/theme_controller.dart';
 import 'package:football_fever/view/splash/controller/splash_controller.dart';
 import 'package:get/get.dart';
 
+import '../../view/home/controller/home_controller.dart';
+
 class InitialBinding extends Bindings {
   @override
   void dependencies() {
@@ -10,6 +12,9 @@ class InitialBinding extends Bindings {
     );
     Get.lazyPut<SplashController>(
       () => SplashController(),
+    );
+    Get.lazyPut<HomeController>(
+      () => HomeController(),
     );
   }
 }

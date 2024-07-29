@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:football_fever/appearance/themes/text_style.dart';
-
 import 'colors.dart';
 
 class AppThemes {
@@ -19,11 +18,11 @@ class AppThemes {
         // iconTheme: IconThemeData(
         //   color: isDark ? AppColors.dark : AppColors.white,
         // ),
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-          statusBarBrightness: Brightness.dark,
-          statusBarIconBrightness: Brightness.light,
-        ),
+        // systemOverlayStyle: const SystemUiOverlayStyle(
+        //   statusBarColor: Colors.transparent,
+        //   statusBarBrightness: Brightness.dark,
+        //   statusBarIconBrightness: Brightness.light,
+        // ),
         backgroundColor: isDark ? AppColors.dark : AppColors.white,
         elevation: 0,
       ),
