@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:animated_rail/animated_rail/animated_rail.dart';
 import 'package:animated_rail/animated_rail/rail_item.dart';
 import 'package:flutter/material.dart';

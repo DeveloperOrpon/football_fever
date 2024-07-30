@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:football_fever/common/widget/net_image.dart';
 import 'package:get/get.dart';
 
 import '../../../../common/widget/favorite_team_card.dart';

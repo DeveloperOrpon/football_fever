@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:football_fever/appearance/image_const.dart';
 import 'package:football_fever/view/home/component/score_tabs/all_score.dart';
 import 'package:get/get.dart';
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:football_fever/backend/api_client.dart';
-import 'package:football_fever/backend/api_header.dart';
 import 'package:football_fever/utils/helper/log.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';

@@ -1,11 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:football_fever/appearance/image_const.dart';
 import 'package:football_fever/common/model/match_res.dart';
 import 'package:football_fever/common/widget/loading_widget.dart';
-import 'package:football_fever/utils/helper/log.dart';
 import 'package:football_fever/view/home/controller/home_controller.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -13,9 +9,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../../appearance/loading/refresh_page.dart';
 import '../../../common/widget/league_title.dart';
 import '../../../common/widget/live_match_tile.dart';
-import '../../../common/widget/time_tile.dart';
 import '../../../common/widget/upcoming_match_tile.dart';
-import '../../../utils/helper/helper_method.dart';
 
 class DateWaysAllMatches extends StatefulWidget {
   final String date;
