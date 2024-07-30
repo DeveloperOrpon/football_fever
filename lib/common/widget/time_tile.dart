@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:football_fever/common/model/match_res.dart';
+import 'package:football_fever/view/match/page/date_ways_all_matches.dart';
 import 'package:get/get.dart';
 
 import '../clipper/tri_angle_clipper.dart';
 
 class TimeTile extends StatelessWidget {
   final String date;
-  const TimeTile({super.key, required this.date});
+  final Map<String, List<MatchModel>>? map;
+  final String? matchCount;
+  const TimeTile({super.key, required this.date, this.matchCount, this.map});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 60.h,
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 10.h),
+      // height: 60.h,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -26,7 +32,9 @@ class TimeTile extends StatelessWidget {
                 color: Get.theme.primaryColor,
               ),
             ),
-          ),
+          )
+              .animate(onPlay: (controller) => controller.repeat())
+              .shimmer(duration: 1000.ms),
           10.horizontalSpace,
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -39,14 +47,118 @@ class TimeTile extends StatelessWidget {
                   fontSize: 22.sp,
                 ),
               ),
-              Text(
-                "5 Matches",
-                style: Get.theme.textTheme.titleLarge!.copyWith(
-                  color: Get.theme.primaryColor,
-                  fontWeight: FontWeight.w300,
-                  fontSize: 13.sp,
-                ),
-              ),
+              map != null
+                  ? InkWell(
+                      onTap: () {
+                        Get.to(
+                            DateWaysAllMatches(
+                              map: map!,
+                              date: date,
+                            ),
+                            transition: Transition.fadeIn,
+                            duration: 500.ms);
+                      },
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 8.w,
+                              vertical: 2.h,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10.r),
+                              ),
+                              border: Border.all(
+                                color: Get.theme.primaryColor,
+                                width: .3,
+                              ),
+                            ),
+                            child: Text(
+                              "$matchCount Matches",
+                              style: Get.theme.textTheme.titleLarge!.copyWith(
+                                color: Get.theme.primaryColor,
+                                fontWeight: FontWeight.w300,
+                                fontSize: 12.sp,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 4.w,
+                              vertical: 2.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Get.theme.primaryColor,
+                              borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(10.r),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "More",
+                                  style:
+                                      Get.theme.textTheme.titleLarge!.copyWith(
+                                    color: Get.theme.scaffoldBackgroundColor,
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 12.sp,
+                                  ),
+                                )
+                                    .animate(
+                                        onPlay: (controller) =>
+                                            controller.repeat(
+                                                reverse: false,
+                                                period: 1000.ms))
+                                    .shimmer(
+                                      duration: 2000.ms,
+                                      color: Colors.black,
+                                    ),
+                                Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  color: Colors.white,
+                                  size: 10.r,
+                                )
+                                    .animate(
+                                        onPlay: (controller) =>
+                                            controller.repeat(
+                                                reverse: false,
+                                                period: 1000.ms))
+                                    .shimmer(
+                                      delay: 500.ms,
+                                      duration: 500.ms,
+                                      color: Colors.black,
+                                    )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  : Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 8.w,
+                        vertical: 2.h,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10.r),
+                        ),
+                        border: Border.all(
+                          color: Get.theme.primaryColor,
+                          width: .3,
+                        ),
+                      ),
+                      child: Text(
+                        "ALL MATCHES",
+                        style: Get.theme.textTheme.titleLarge!.copyWith(
+                          color: Get.theme.primaryColor,
+                          fontWeight: FontWeight.w300,
+                          fontSize: 12.sp,
+                        ),
+                      ),
+                    ),
             ],
           ),
           10.horizontalSpace,
@@ -57,7 +169,9 @@ class TimeTile extends StatelessWidget {
               height: 20,
               color: Get.theme.primaryColor,
             ),
-          ),
+          )
+              .animate(onPlay: (controller) => controller.repeat())
+              .shimmer(duration: 1000.ms, angle: 90),
         ],
       ),
     );

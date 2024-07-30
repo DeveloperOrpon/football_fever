@@ -46,13 +46,16 @@ class FollowingTeam extends StatelessWidget {
                     ),
                     Center(
                       child: CircleAvatar(
+                        radius: 26.r,
                         backgroundColor: Get.theme.scaffoldBackgroundColor,
                         child: Padding(
                           padding: const EdgeInsets.all(3.0),
                           child: CircleAvatar(
+                            radius: 30.r,
                             backgroundColor: Get.theme.shadowColor,
                             child: Icon(
                               Icons.add,
+                              size: 25.r,
                             ),
                           ),
                         ),
@@ -75,9 +78,9 @@ class FollowingTeam extends StatelessWidget {
           SliverGrid.builder(
             itemCount: 20,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              mainAxisExtent: 190.h,
-              crossAxisSpacing: 10.w,
+              crossAxisCount: Get.width > 600 ? 5 : 4,
+              mainAxisExtent: 180.h,
+              crossAxisSpacing: Get.width > 600 ? 5.w : 0,
             ),
             itemBuilder: (context, index) {
               return const FavoriteTeamCard(isFavorite: false);

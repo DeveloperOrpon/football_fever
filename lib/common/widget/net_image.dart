@@ -10,6 +10,7 @@ class NetImageView extends StatelessWidget {
   final String? type;
   final double? height;
   final double? width;
+  final double? radius;
   final double? progressIndicatorRadius;
   final BoxFit fit;
   final Widget? loading;
@@ -19,6 +20,7 @@ class NetImageView extends StatelessWidget {
       {super.key,
       required this.url,
       this.height,
+      this.radius,
       this.width,
       this.fit = BoxFit.cover,
       this.progressIndicatorRadius,
@@ -28,18 +30,21 @@ class NetImageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CachedNetworkImage(
-      imageUrl: url,
-      height: height,
-      width: width,
-      fit: fit,
-      progressIndicatorBuilder: (context, url, downloadProgress) =>
-          loading ?? LoadingWidget(size: height ?? 20.h),
-      errorWidget: (context, url, error) => Image.asset(
-        appNameLogo,
+    return ClipRRect(
+      borderRadius: BorderRadius.all(Radius.circular(radius ?? 0)).r,
+      child: CachedNetworkImage(
+        imageUrl: url,
         height: height,
         width: width,
         fit: fit,
+        progressIndicatorBuilder: (context, url, downloadProgress) =>
+            loading ?? LoadingWidget(size: height ?? 20.h),
+        errorWidget: (context, url, error) => Image.asset(
+          appNameLogo,
+          height: height,
+          width: width,
+          fit: fit,
+        ),
       ),
     );
   }

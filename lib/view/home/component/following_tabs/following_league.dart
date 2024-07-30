@@ -72,9 +72,9 @@ class FollowingLeague extends StatelessWidget {
           SliverGrid.builder(
             itemCount: 20,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              mainAxisExtent: 190.h,
-              crossAxisSpacing: 10.w,
+              crossAxisCount: 4,
+              mainAxisExtent: 180.h,
+              crossAxisSpacing: 0.w,
             ),
             itemBuilder: (context, index) {
               return const FavoriteTeamCard(isFavorite: false);

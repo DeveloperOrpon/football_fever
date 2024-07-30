@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:football_fever/common/widget/net_image.dart';
+import 'package:football_fever/utils/helper/helper_method.dart';
 import 'package:get/get.dart';
+
+import '../model/match_res.dart';
 
 class UpcomingMatchTile extends StatelessWidget {
   final bool isLive;
-  const UpcomingMatchTile({super.key, this.isLive = false});
+  final MatchModel matchModel;
+  const UpcomingMatchTile(
+      {super.key, this.isLive = false, required this.matchModel});
 
   @override
   Widget build(BuildContext context) {
@@ -51,25 +56,35 @@ class UpcomingMatchTile extends StatelessWidget {
                 flex: 2,
                 child: Column(
                   children: [
-                    const Expanded(
+                    Center(
                       child: Padding(
-                        padding: EdgeInsets.all(4.0),
+                        padding: EdgeInsets.only(bottom: 2.h),
                         child: NetImageView(
+                          width: Get.width * .3,
+                          height: 45.h,
                           fit: BoxFit.contain,
-                          url:
-                              'https://resources.premierleague.com/premierleague/competitions/competition_1_small.png',
+                          url: (getHomeTeam(matchModel.participants ?? [])
+                                      ?.imagePath ??
+                                  "")
+                              .toString(),
                         ),
                       ),
                     ),
-                    Text(
-                      'Manchester',
-                      style: Get.theme.textTheme.titleMedium!.copyWith(
-                        fontSize: 15.sp,
+                    Expanded(
+                      child: Text(
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                        (getHomeTeam(matchModel.participants ?? [])?.name ?? "")
+                            .toString(),
+                        style: Get.theme.textTheme.titleMedium!.copyWith(
+                          fontSize: 15.sp,
+                        ),
                       ),
                     )
                   ],
                 ),
               ),
+              5.horizontalSpace,
               Expanded(
                 flex: 1,
                 child: Column(
@@ -78,43 +93,55 @@ class UpcomingMatchTile extends StatelessWidget {
                   children: [
                     FittedBox(
                       child: Text(
-                        "06:30",
+                        getMatchTimeFormate(
+                            matchModel.startingAtTimestamp ?? 0),
                         style: Get.theme.textTheme.titleLarge!.copyWith(
                           color: Get.theme.primaryColor,
-                          fontSize: Get.width > 600 ? 28.sp : 40.sp,
+                          fontSize: Get.width > 600 ? 26.sp : 40.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
                     Get.width > 600 ? 0.verticalSpace : 4.verticalSpace,
                     Text(
-                      'Mon, 27 Jul',
+                      getMatchDateFormate(matchModel.startingAtTimestamp ?? 0),
                       style: Get.theme.textTheme.labelMedium!.copyWith(
                         color: Get.theme.disabledColor,
-                        fontSize: 12.sp,
+                        fontSize: Get.width > 600 ? 10.sp : 12.sp,
                       ),
                     )
                   ],
                 ),
               ),
+              5.horizontalSpace,
               Expanded(
                 flex: 2,
                 child: Column(
                   children: [
-                    const Expanded(
+                    Center(
                       child: Padding(
-                        padding: EdgeInsets.all(4.0),
+                        padding: EdgeInsets.only(bottom: 2.h),
                         child: NetImageView(
+                          width: Get.width * .3,
+                          radius: 45.r,
+                          height: 45.h,
                           fit: BoxFit.contain,
-                          url:
-                              'https://resources.premierleague.com/premierleague/competitions/competition_1_small.png',
+                          url: (getAwayTeam(matchModel.participants ?? [])
+                                      ?.imagePath ??
+                                  "")
+                              .toString(),
                         ),
                       ),
                     ),
-                    Text(
-                      'Dortmund',
-                      style: Get.theme.textTheme.titleMedium!.copyWith(
-                        fontSize: 15.sp,
+                    Expanded(
+                      child: Text(
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                        (getAwayTeam(matchModel.participants ?? [])?.name ?? "")
+                            .toString(),
+                        style: Get.theme.textTheme.titleMedium!.copyWith(
+                          fontSize: 15.sp,
+                        ),
                       ),
                     )
                   ],

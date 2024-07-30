@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:football_fever/common/widget/net_image.dart';
 import 'package:get/get.dart';
@@ -81,7 +82,7 @@ class LiveMatchTile extends StatelessWidget {
                         "3-2",
                         style: Get.theme.textTheme.titleLarge!.copyWith(
                           color: Get.theme.primaryColor,
-                          fontSize: Get.width > 600 ? 28.sp : 40.sp,
+                          fontSize: Get.width > 600 ? 26.sp : 40.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -94,7 +95,11 @@ class LiveMatchTile extends StatelessWidget {
                           Icons.timer_sharp,
                           size: 20.r,
                           color: Get.theme.disabledColor,
-                        ),
+                        )
+                            .animate(
+                                onPlay: (controller) =>
+                                    controller.repeat(reverse: true))
+                            .shake(hz: 2, duration: 500.ms, rotation: .4),
                         3.horizontalSpace,
                         Text(
                           maxLines: 1,
@@ -102,7 +107,7 @@ class LiveMatchTile extends StatelessWidget {
                           '90+3"',
                           style: Get.theme.textTheme.labelMedium!.copyWith(
                             color: Get.theme.disabledColor,
-                            fontSize: Get.width > 600 ? 12.sp : 14.sp,
+                            fontSize: Get.width > 600 ? 10.sp : 14.sp,
                           ),
                         ),
                       ],

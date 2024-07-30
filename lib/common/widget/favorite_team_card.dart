@@ -23,7 +23,7 @@ class FavoriteTeamCard extends StatelessWidget {
             color: Get.theme.scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(100.r),
           ),
-          width: 90.w,
+          width: Get.width > 600 ? 70.w : 90.w,
           height: 150.h,
           child: Stack(
             alignment: Alignment.center,
@@ -53,7 +53,7 @@ class FavoriteTeamCard extends StatelessWidget {
                 children: [
                   8.verticalSpace,
                   Container(
-                    height: 70.h,
+                    height: 60.h,
                     padding: EdgeInsets.symmetric(horizontal: 10.w),
                     child: NetImageView(
                       fit: BoxFit.contain,
@@ -64,9 +64,11 @@ class FavoriteTeamCard extends StatelessWidget {
                   ),
                   3.verticalSpace,
                   Text(
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
                     'Man United',
                     style:
-                        TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold),
                   ),
                   Icon(
                     Icons.star_rate_rounded,

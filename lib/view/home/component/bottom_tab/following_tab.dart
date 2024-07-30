@@ -34,11 +34,13 @@ class FollowingTab extends StatelessWidget {
                   indicatorWeight: 1,
                   labelStyle: Get.theme.textTheme.titleLarge!.copyWith(
                     fontWeight: FontWeight.w600,
+                    fontSize: Get.width > 600 ? 14.sp : null,
                   ),
                   unselectedLabelStyle:
                       Get.theme.textTheme.titleLarge!.copyWith(
                     fontWeight: FontWeight.w600,
                     color: Get.theme.disabledColor,
+                    fontSize: Get.width > 600 ? 14.sp : null,
                   ),
                   tabs: const [
                     Tab(

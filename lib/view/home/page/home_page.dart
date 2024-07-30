@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
             isStatic: true,
             background: const Color(0XFFfec142),
             maxWidth: Get.width * .6,
-            width: 30.w,
+            width: 20.w,
             direction: TextDirection.rtl,
             railTileConfig: RailTileConfig(
               iconSize: 25.r,
@@ -50,7 +50,7 @@ class HomePage extends StatelessWidget {
               child: Container(
                 color: const Color(0xFFf9f9f9),
                 margin: EdgeInsets.only(
-                  right: 30.w,
+                  right: 10.w,
                 ),
                 child: Column(
                   children: [
@@ -60,7 +60,7 @@ class HomePage extends StatelessWidget {
                         bottom: 10.h,
                       ),
                       color: Get.theme.scaffoldBackgroundColor,
-                      height: 120.h,
+                      height: 100.h,
                       child: Align(
                         alignment: Alignment.bottomLeft,
                         child: Image.asset(

@@ -20,9 +20,9 @@ class FollowingMatches extends StatelessWidget {
           icon:
               'https://resources.premierleague.com/premierleague/competitions/competition_1_small.png',
         ),
-        UpcomingMatchTile(
-          isLive: true,
-        ),
+        // UpcomingMatchTile(
+        //   isLive: true,
+        // ),
         LeagueTitle(
           name: 'Champions League',
           icon:
@@ -31,9 +31,9 @@ class FollowingMatches extends StatelessWidget {
         LiveMatchTile(
           isLive: true,
         ),
-        UpcomingMatchTile(
-          isLive: true,
-        ),
+        // UpcomingMatchTile(
+        //   isLive: true,
+        // ),
       ],
     );
   }
