@@ -187,7 +187,7 @@ class PlayerModel {
   int? height;
   int? weight;
   DateTime? dateOfBirth;
-  Gender? gender;
+  String? gender;
   Country? country;
 
   PlayerModel({
@@ -255,7 +255,7 @@ class PlayerModel {
         "weight": weight,
         "date_of_birth":
             "${dateOfBirth!.year.toString().padLeft(4, '0')}-${dateOfBirth!.month.toString().padLeft(2, '0')}-${dateOfBirth!.day.toString().padLeft(2, '0')}",
-        "gender": genderValues.reverse[gender],
+        "gender": gender,
       };
 }
 
@@ -317,10 +317,6 @@ class Country {
         "image_path": imagePath,
       };
 }
-
-enum Gender { MALE }
-
-final genderValues = EnumValues({"male": Gender.MALE});
 
 class Type {
   int? id;

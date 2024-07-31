@@ -94,12 +94,12 @@ class HomeController extends GetxController {
   RxBool allDayMatchLoading = RxBool(false);
   RefreshController refreshController =
       RefreshController(initialRefresh: false);
-  int page = 2;
-  void onRefresh(String date) async {
+  int page = 1;
+  void onRefreshDayAllMatches(String date) async {
     page = 1;
     dayAllDateWaysMatches.value = {};
 
-    await getDateWaysMatchPagination(
+    getDateWaysMatchPagination(
         date: date.toLowerCase() == "TODAY".toLowerCase()
             ? fixtureDateFormateQuery(DateTime.now())
             : date,
@@ -107,8 +107,16 @@ class HomeController extends GetxController {
     refreshController.refreshCompleted();
   }
 
-  void onLoading() async {
-    refreshController.loadComplete();
+  void onLoadingDayAllMatches(String date) async {
+    page++;
+    logPrint(
+        '${APIEndpoints.sportsBaseUrl}${APIEndpoints.fixturesUrl}date/$date?page=$page');
+
+    getDateWaysMatchPagination(
+        date: date.toLowerCase() == "TODAY".toLowerCase()
+            ? fixtureDateFormateQuery(DateTime.now())
+            : date,
+        page: page);
   }
 
   Future<Map<String, List<MatchModel>>> getDateWaysMatchPagination({
@@ -123,25 +131,43 @@ class HomeController extends GetxController {
         "token": APIEndpoints.cacheServerApiToken,
       },
       ifLoading: () {
-        allDayMatchLoading.value = true;
+        if (page == 1) {
+          allDayMatchLoading.value = true;
+        }
       },
       queryParameters: {
         'include': 'participants;scores;league.seasons;events.participant',
         "page": page,
       },
       ifSucceed: (response) {
+        logPrint(
+            'Url: ${response.requestOptions.baseUrl}${response.requestOptions.path}');
         Map<String, dynamic> serverMap = response.data;
         MatchRes tempRes = MatchRes.fromJson(serverMap);
         (tempRes.data ?? [])
             .sort((a, b) => a.league!.name!.compareTo(b.league!.name!));
-        dayAllDateWaysMatches.value = {};
-        for (var match in (tempRes.data ?? [])) {
-          dayAllDateWaysMatches.putIfAbsent(
-              match.league!.name.toString(), () => []);
-          dayAllDateWaysMatches[match.league!.name.toString()]!.add(match);
+        if (page == 1) {
+          dayAllDateWaysMatches.value = {};
+          for (var match in (tempRes.data ?? [])) {
+            dayAllDateWaysMatches.putIfAbsent(
+                match.league!.name.toString(), () => []);
+            dayAllDateWaysMatches[match.league!.name.toString()]!.add(match);
+          }
+          logPrint('${dayAllDateWaysMatches.length}');
+          allDayMatchLoading.value = false;
+        } else {
+          logPrint('load_$page--${(tempRes.data ?? []).length}');
+
+          for (var match in (tempRes.data ?? [])) {
+            logPrint("load_${match.league!.name}");
+            dayAllDateWaysMatches.putIfAbsent(
+                "${match.league!.name}.", () => []);
+            dayAllDateWaysMatches["${match.league!.name}."]!.add(match);
+          }
+          logPrint('load_${dayAllDateWaysMatches.length}');
+          refreshController.loadComplete();
         }
-        logPrint('${dayAllDateWaysMatches.length}');
-        allDayMatchLoading.value = false;
+
         return dayAllDateWaysMatches;
       },
       ifFailed: (error) {
@@ -150,5 +176,49 @@ class HomeController extends GetxController {
         return {};
       },
     );
+  }
+
+  ///live matches
+  RxBool isLiveScoreMatch = RxBool(false);
+  Rxn<MatchRes> liveMatchRes = Rxn<MatchRes>();
+  RxList<MatchModel> liveMatchList = RxList<MatchModel>([]);
+
+  getScoreLiveMatches() async {
+    return ApiClient.remoteApiCall(
+      apiUrl: '${APIEndpoints.sportsBaseUrl}${APIEndpoints.liveScoresUrl}',
+      reqType: ApiRequestType.get,
+      headers: {
+        "token": APIEndpoints.cacheServerApiToken,
+      },
+      queryParameters: {
+        'include': 'participants;scores;league.seasons;events.participant'
+      },
+      ifLoading: () {
+        isLiveScoreMatch.value = true;
+      },
+      ifSucceed: (response) {
+        Map<String, dynamic> serverMap = response.data;
+        liveMatchRes.value = MatchRes.fromJson(serverMap);
+        liveMatchList.value = liveMatchRes.value!.data ?? [];
+        isLiveScoreMatch.value = false;
+      },
+      ifFailed: (error) {
+        isLiveScoreMatch.value = false;
+      },
+    );
+  }
+
+  //liveMatches refresh
+  RefreshController refreshControllerLiveMatches =
+      RefreshController(initialRefresh: false);
+
+  void onRefreshLiveMatches() async {
+    isLiveScoreMatch.value = true;
+    getScoreLiveMatches();
+    refreshControllerLiveMatches.refreshCompleted();
+  }
+
+  void onLoadingLiveMatches() async {
+    refreshControllerLiveMatches.loadComplete();
   }
 }

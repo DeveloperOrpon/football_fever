@@ -71,13 +71,16 @@ class UpcomingMatchTile extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Text(
-                        maxLines: 1,
-                        textAlign: TextAlign.center,
-                        (getHomeTeam(matchModel.participants ?? [])?.name ?? "")
-                            .toString(),
-                        style: Get.theme.textTheme.titleMedium!.copyWith(
-                          fontSize: 15.sp,
+                      child: Center(
+                        child: Text(
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                          (getHomeTeam(matchModel.participants ?? [])?.name ??
+                                  "")
+                              .toString(),
+                          style: Get.theme.textTheme.titleMedium!.copyWith(
+                            fontSize: 15.sp,
+                          ),
                         ),
                       ),
                     )
@@ -99,6 +102,7 @@ class UpcomingMatchTile extends StatelessWidget {
                           color: Get.theme.primaryColor,
                           fontSize: Get.width > 600 ? 26.sp : 40.sp,
                           fontWeight: FontWeight.w600,
+                          fontFamily: 'Barlow',
                         ),
                       ),
                     ),
@@ -108,6 +112,7 @@ class UpcomingMatchTile extends StatelessWidget {
                       style: Get.theme.textTheme.labelMedium!.copyWith(
                         color: Get.theme.disabledColor,
                         fontSize: Get.width > 600 ? 10.sp : 12.sp,
+                        fontFamily: 'Barlow',
                       ),
                     )
                   ],
@@ -134,13 +139,16 @@ class UpcomingMatchTile extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Text(
-                        maxLines: 1,
-                        textAlign: TextAlign.center,
-                        (getAwayTeam(matchModel.participants ?? [])?.name ?? "")
-                            .toString(),
-                        style: Get.theme.textTheme.titleMedium!.copyWith(
-                          fontSize: 15.sp,
+                      child: Center(
+                        child: Text(
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                          (getAwayTeam(matchModel.participants ?? [])?.name ??
+                                  "")
+                              .toString(),
+                          style: Get.theme.textTheme.titleMedium!.copyWith(
+                            fontSize: 15.sp,
+                          ),
                         ),
                       ),
                     )

@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:football_fever/appearance/themes/text_style.dart';
+import 'package:get/get.dart';
 import 'colors.dart';
 
 class AppThemes {
@@ -23,13 +25,16 @@ class AppThemes {
         //   statusBarBrightness: Brightness.dark,
         //   statusBarIconBrightness: Brightness.light,
         // ),
-        backgroundColor: isDark ? AppColors.dark : AppColors.white,
+        backgroundColor: isDark ? AppColors.dark : const Color(0xFFf9f9f9),
         elevation: 0,
       ),
       shadowColor: isDark ? const Color(0xFF1D1D2F) : Colors.grey.shade200,
       cardColor: isDark ? AppColors.blackLight : AppColors.white,
       iconTheme: IconThemeData(
         color: isDark ? Colors.white : Colors.black,
+      ),
+      cupertinoOverrideTheme: CupertinoThemeData(
+        primaryColor: isDark ? Colors.white : Colors.black,
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
           style: ButtonStyle(

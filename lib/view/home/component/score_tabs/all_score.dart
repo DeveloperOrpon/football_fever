@@ -7,6 +7,7 @@ import 'package:football_fever/common/widget/no_data.dart';
 import 'package:football_fever/common/widget/time_tile.dart';
 import 'package:football_fever/utils/helper/helper_method.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../../../appearance/loading/refresh_page.dart';
 import '../../../../common/widget/upcoming_match_tile.dart';
@@ -53,7 +54,8 @@ class AllScoreTab extends StatelessWidget {
                                                   DateTime.now()) ==
                                               dateMatch.key
                                           ? 'TODAY'
-                                          : dateMatch.key,
+                                          : DateFormat('MMMM d, yyyy').format(
+                                              DateTime.parse(dateMatch.key)),
                                       matchCount:
                                           dateWayMatchCount(dateMatch.value),
                                     ),
@@ -84,7 +86,11 @@ class AllScoreTab extends StatelessWidget {
                                                                     e.value[
                                                                         index],
                                                               )
-                                                            : LiveMatchTile();
+                                                            : LiveMatchTile(
+                                                                matchModel:
+                                                                    e.value[
+                                                                        index],
+                                                              );
                                                       },
                                                     )
                                                   ],

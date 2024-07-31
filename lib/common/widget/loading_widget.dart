@@ -9,9 +9,11 @@ class LoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LoadingAnimationWidget.fourRotatingDots(
-      color: indicatorColor ?? Get.theme.primaryColor,
-      size: size,
+    return Center(
+      child: LoadingAnimationWidget.fourRotatingDots(
+        color: indicatorColor ?? Get.theme.primaryColor,
+        size: size,
+      ),
     );
   }
 }

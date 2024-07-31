@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:intl/intl.dart';
 
 import '../../common/model/match_res.dart';
@@ -41,4 +42,22 @@ String dateWayMatchCount(Map<String, List<MatchModel>> map) {
     matchCount += matchList.length;
   });
   return matchCount.toString();
+}
+
+String getMatchResult(List<ScoreElement> scores) {
+  String result = '';
+  List<ScoreElement> currentScores = scores
+      .where((element) => element.description == Description.CURRENT)
+      .toList();
+  result =
+      '$result${currentScores.firstWhereOrNull((element) => element.score!.participant == Location.HOME)!.score!.goals} : ';
+  result =
+      '$result${currentScores.firstWhereOrNull((element) => element.score!.participant == Location.AWAY)!.score!.goals}';
+  return result;
+}
+
+String timestampToDateFormate(int timestamp, {String formate = 'ha d MMMM'}) {
+  DateTime date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+  String formattedDate = DateFormat(formate).format(date);
+  return formattedDate;
 }

@@ -5,4 +5,7 @@ class APIEndpoints {
   static String sportsBaseUrl = "https://api.cnfzone.com/api/sm-football/v3/";
   static String cacheServerApiToken = 'HSC9mDQJjstIkdmlsrwDhcx8msWlg';
   static const String fixturesUrl = "fixtures/";
+  static const String liveScoresUrl = "livescores";
+  static const String teamUrl = "teams";
+  static const String leagueUrl = "leagues";
 }

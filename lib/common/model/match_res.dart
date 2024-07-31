@@ -508,7 +508,7 @@ class Participant {
   num? sportId;
   num? countryId;
   num? venueId;
-  Gender? gender;
+  String? gender;
   String? name;
   String? shortCode;
   String? imagePath;
@@ -565,7 +565,7 @@ class Participant {
         "sport_id": sportId,
         "country_id": countryId,
         "venue_id": venueId,
-        "gender": genderValues.reverse[gender],
+        "gender": gender,
         "name": name,
         "short_code": shortCode,
         "image_path": imagePath,
@@ -576,10 +576,6 @@ class Participant {
         "meta": meta?.toJson(),
       };
 }
-
-enum Gender { MALE }
-
-final genderValues = EnumValues({"male": Gender.MALE});
 
 class ParticipantMeta {
   Location? location;

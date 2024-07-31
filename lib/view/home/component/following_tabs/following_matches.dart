@@ -26,9 +26,9 @@ class FollowingMatches extends StatelessWidget {
           icon:
               'https://resources.premierleague.com/premierleague/competitions/competition_1_small.png',
         ),
-        LiveMatchTile(
-          isLive: true,
-        ),
+        // LiveMatchTile(
+        //   isLive: true,
+        // ),
         // UpcomingMatchTile(
         //   isLive: true,
         // ),

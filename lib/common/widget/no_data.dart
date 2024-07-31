@@ -9,12 +9,16 @@ class NoDataCustomWidget extends StatelessWidget {
   final double bottomSize;
   final String? buttonText;
   final String? titleText;
+  final String? subText;
+  final bool isShowLogo;
   const NoDataCustomWidget(
       {super.key,
       this.onRefresh,
       this.bottomSize = 200,
       this.buttonText,
-      this.titleText});
+      this.titleText,
+      this.subText,
+      this.isShowLogo = true});
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +27,13 @@ class NoDataCustomWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset(
-            appNameLogo,
-            height: 100.h,
-            color: Get.theme.secondaryHeaderColor,
-          ),
-          8.verticalSpace,
+          if (isShowLogo)
+            Image.asset(
+              appNameLogo,
+              height: 100.h,
+              color: Get.theme.secondaryHeaderColor,
+            ),
+          if (isShowLogo) 8.verticalSpace,
           Text(
             (titleText ?? 'No Data Found').toUpperCase(),
             style: TextStyle(
@@ -40,10 +45,11 @@ class NoDataCustomWidget extends StatelessWidget {
           4.verticalSpace,
           Text(
             textAlign: TextAlign.center,
-            'There seems to be no data available to show Try in some other time'
-                .toUpperCase(),
+            subText ??
+                'There seems to be no data available to show Try in some other time'
+                    .toUpperCase(),
             style: TextStyle(
-              fontSize: 13.sp,
+              fontSize: 12.sp,
               color: Get.theme.disabledColor.withOpacity(.3),
             ),
           ),

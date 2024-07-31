@@ -7,18 +7,18 @@ import 'package:get/get.dart';
 import '../../view/following/controller/following_controller.dart';
 import '../model/match_res.dart';
 
-class FavoriteTeamCard extends StatelessWidget {
+class FavoriteLeagueCard extends StatelessWidget {
   final bool isFavorite;
-  final Participant team;
-  const FavoriteTeamCard(
-      {super.key, required this.isFavorite, required this.team});
+  final League league;
+  const FavoriteLeagueCard(
+      {super.key, required this.isFavorite, required this.league});
 
   @override
   Widget build(BuildContext context) {
     final FollowingController followingController = Get.find();
     return InkWell(
       onTap: () {
-        followingController.saveFavoriteTeam(team);
+        followingController.saveFavoriteLeague(league);
       },
       child: Card(
         elevation: 3,
@@ -67,14 +67,14 @@ class FavoriteTeamCard extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 10.w),
                       child: NetImageView(
                         fit: BoxFit.contain,
-                        url: team.imagePath ?? '',
+                        url: league.imagePath ?? '',
                       ),
                     ),
                     3.verticalSpace,
                     Text(
                       maxLines: 1,
                       textAlign: TextAlign.center,
-                      '${team.name}',
+                      '${league.name}',
                       style: TextStyle(
                           fontSize: 12.sp, fontWeight: FontWeight.bold),
                     ),
