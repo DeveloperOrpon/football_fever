@@ -4,13 +4,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 refreshLoading(BuildContext context, {Color? color}) => WaterDropHeader(
+      idleIcon: Icon(
+        Icons.rotate_left_rounded,
+        size: 18.r,
+        color: Colors.white,
+      ),
       waterDropColor: Theme.of(context).primaryColor,
       complete: Text(
-        "Refresh Completed",
+        "Refreshing Continue",
         style: Theme.of(context).textTheme.labelMedium,
       ),
       refresh: CupertinoActivityIndicator(
-        color: color ?? (Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.white),
+        color: color ??
+            (Theme.of(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.white),
         radius: 10.w,
       ),
     );

@@ -28,6 +28,7 @@ class ApiClient {
     dynamic data,
   }) async {
     _dio.interceptors.add(RetryOnConnectionChangeInterceptor());
+
     try {
       await ifLoading?.call();
       late Response response;
@@ -54,21 +55,21 @@ class ApiClient {
           options: Options(headers: headers),
         );
       }
-      await ifSucceed(response);
+      return await ifSucceed(response);
     } on DioException catch (error) {
       Logger().e(error);
       log("error: ${error.requestOptions.path} -- ${error.response?.data}");
-      ifFailed!(ApiException(
+      return ifFailed!(ApiException(
           url: error.requestOptions.path,
           message: error.response?.data['msg'] ??
               error.response?.data['message'] ??
               "${error.message}"));
     } on TimeoutException {
       Logger().e("Connection Timeout");
-      ifFailed!(ApiException(url: '', message: "Connection Timeout"));
+      return ifFailed!(ApiException(url: '', message: "Connection Timeout"));
     } catch (error, stackTrace) {
       Logger().e(stackTrace);
-      ifFailed!(
+      return ifFailed!(
           ApiException(url: stackTrace.toString(), message: error.toString()));
     }
   }

@@ -4,20 +4,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:football_fever/backend/api_header.dart';
 import 'package:football_fever/common/model/league_res.dart';
-import 'package:football_fever/common/widget/favorite_league_card.dart';
+import 'package:football_fever/common/shared_preferences/local_app_data.dart';
 import 'package:football_fever/utils/helper/log.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../backend/api_client.dart';
 import '../../../backend/api_endpoints.dart';
 import '../../../common/model/match_res.dart';
+import '../../../common/model/search_team_res.dart';
 import '../../../common/model/team_res.dart';
 
 class FollowingController extends GetxController {
   @override
   void onInit() {
+    getLocalDataTeam(isInit: true);
+    getLocalDataLeague(isInit: true);
     super.onInit();
   }
 
@@ -26,7 +28,6 @@ class FollowingController extends GetxController {
   Rxn<TeamRes> tempRes = Rxn<TeamRes>();
   RxList<Participant> allTeamList = RxList([]);
   getAllTeams() {
-    log('${APIEndpoints.sportsBaseUrl}${APIEndpoints.teamUrl}?page=$pageTeam');
     return ApiClient.remoteApiCall(
       apiUrl:
           '${APIEndpoints.sportsBaseUrl}${APIEndpoints.teamUrl}?page=$pageTeam',
@@ -146,11 +147,21 @@ class FollowingController extends GetxController {
   }
 
   saveFavoriteTeam(Participant team) {
-    if (favoriteTeamList.contains(team)) {
-      favoriteTeamList.remove(team);
+    if (favoriteTeamList.firstWhereOrNull((e) => e.id == team.id) == null
+        ? false
+        : true) {
+      favoriteTeamList.removeWhere((e) => e.id == team.id);
     } else {
       favoriteTeamList.add(team);
     }
+    getLocalDataTeam();
+  }
+
+  getLocalDataTeam({bool isInit = false}) async {
+    if (!isInit) await LocalAppData.setFavoriteTeam(favoriteTeamList);
+    await LocalAppData.getFavoriteTeam().then((value) {
+      favoriteTeamList.value = value;
+    });
   }
 
   //user favorite teams
@@ -189,10 +200,48 @@ class FollowingController extends GetxController {
 
   // Save user favorite team
   saveFavoriteLeague(League league) {
-    if (favoriteLeagueList.contains(league)) {
-      favoriteLeagueList.remove(league);
+    if (favoriteLeagueList.firstWhereOrNull((e) => e.id == league.id) == null
+        ? false
+        : true) {
+      favoriteLeagueList.removeWhere((e) => e.id == league.id);
     } else {
       favoriteLeagueList.add(league);
     }
+    getLocalDataLeague();
+  }
+
+  getLocalDataLeague({bool isInit = false}) async {
+    if (!isInit) await LocalAppData.setFavoriteLeague(favoriteLeagueList);
+    await LocalAppData.getFavoriteLeague().then((value) {
+      favoriteLeagueList.value = value;
+    });
+  }
+
+  //
+  RxList<Participant> availableSearchTeam = RxList<Participant>([]);
+  RxBool isSearchLoading = RxBool(false);
+  Future<void> teamSearch(String query) async {
+    return ApiClient.remoteApiCall(
+      apiUrl:
+          '${APIEndpoints.sportsBaseUrl}${APIEndpoints.searchTeamUrl}$query',
+      reqType: ApiRequestType.get,
+      headers: APIHeader.sportsApiHeader,
+      queryParameters: {
+        'include': 'activeSeasons.league.country;activeSeasons.league.seasons',
+      },
+      ifLoading: () {
+        isSearchLoading.value = true;
+        availableSearchTeam.clear();
+      },
+      ifSucceed: (response) {
+        Map<String, dynamic> serverMap = response.data;
+        SearchTeamRes searchTeamRes = SearchTeamRes.fromJson(serverMap);
+        availableSearchTeam.value = searchTeamRes.data ?? [];
+        isSearchLoading.value = false;
+      },
+      ifFailed: (error) {
+        isSearchLoading.value = false;
+      },
+    );
   }
 }

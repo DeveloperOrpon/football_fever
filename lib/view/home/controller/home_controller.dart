@@ -22,10 +22,11 @@ class HomeController extends GetxController {
       RefreshController(initialRefresh: false);
 
   void onRefreshAllScore() async {
-    _currentDate = DateTime.now();
-    scorePageLoading.value = true;
-    homeAllDateWaysMatchesList.clear();
-    await getDateWaysMatch(date: fixtureDateFormateQuery(_currentDate));
+    // _currentDate = DateTime.now();
+    // scorePageLoading.value = true;
+    // homeAllDateWaysMatchesList.clear();
+    _decreaseDate();
+    await getDateWaysMatch(date: fixtureDateFormateQuery(_loadOlderDate));
     refreshControllerAllScore.refreshCompleted();
   }
 
@@ -39,8 +40,13 @@ class HomeController extends GetxController {
   }
 
   DateTime _currentDate = DateTime.now();
+  DateTime _loadOlderDate = DateTime.now();
   void _incrementDate() {
     _currentDate = _currentDate.add(const Duration(days: 1));
+  }
+
+  void _decreaseDate() {
+    _loadOlderDate = _loadOlderDate.subtract(const Duration(days: 1));
   }
 
   RxBool scorePageLoading = RxBool(true);
@@ -49,6 +55,8 @@ class HomeController extends GetxController {
   RxMap<String, Map<String, List<MatchModel>>> homeAllDateWaysMatchesList =
       RxMap();
   Future<void> getDateWaysMatch({required String date}) async {
+    logPrint(
+        "${APIEndpoints.sportsBaseUrl}${APIEndpoints.fixturesUrl}date/$date");
     RxMap<String, List<MatchModel>> homeDateWaysMatches = RxMap();
     return ApiClient.remoteApiCall(
       apiUrl:
@@ -58,27 +66,51 @@ class HomeController extends GetxController {
         "token": APIEndpoints.cacheServerApiToken,
       },
       queryParameters: {
-        'include': 'participants;scores;league.seasons;events.participant'
+        'include': 'participants;scores;league;periods',
+        "per_page": 10
       },
       ifLoading: () {
         homeDateWaysMatches.clear();
       },
       ifSucceed: (response) {
-        Map<String, dynamic> serverMap = response.data;
-        MatchRes tempRes = MatchRes.fromJson(serverMap);
-        (tempRes.data ?? [])
-            .sort((a, b) => a.league!.name!.compareTo(b.league!.name!));
-        homeDateWaysMatches.value = {};
-        for (var match in (tempRes.data ?? [])) {
-          homeDateWaysMatches.putIfAbsent(
-              match.league!.name.toString(), () => []);
-          homeDateWaysMatches[match.league!.name.toString()]!.add(match);
+        if (DateTime.now().isAfter(DateTime.parse(date))) {
+          Map<String, dynamic> serverMap = response.data;
+          MatchRes tempRes = MatchRes.fromJson(serverMap);
+          (tempRes.data ?? [])
+              .sort((a, b) => a.league!.name!.compareTo(b.league!.name!));
+          homeDateWaysMatches.value = {};
+          for (var match in (tempRes.data ?? [])) {
+            homeDateWaysMatches.putIfAbsent(
+                match.league!.name.toString(), () => []);
+            homeDateWaysMatches[match.league!.name.toString()]!.add(match);
+          }
+          scorePageLoading.value = false;
+          scoreOnLoadCalling.value = false;
+          Map<String, Map<String, List<MatchModel>>> temp = {};
+          temp = homeAllDateWaysMatchesList.value;
+          homeAllDateWaysMatchesList.value = {};
+          homeAllDateWaysMatchesList.putIfAbsent(
+              date, () => homeDateWaysMatches);
+          homeAllDateWaysMatchesList.addAll(temp);
+          return;
+        } else {
+          Map<String, dynamic> serverMap = response.data;
+          MatchRes tempRes = MatchRes.fromJson(serverMap);
+          (tempRes.data ?? [])
+              .sort((a, b) => a.league!.name!.compareTo(b.league!.name!));
+          homeDateWaysMatches.value = {};
+          for (var match in (tempRes.data ?? [])) {
+            homeDateWaysMatches.putIfAbsent(
+                match.league!.name.toString(), () => []);
+            homeDateWaysMatches[match.league!.name.toString()]!.add(match);
+          }
+          scorePageLoading.value = false;
+          scoreOnLoadCalling.value = false;
+          homeAllDateWaysMatchesList.putIfAbsent(
+              date, () => homeDateWaysMatches);
+          logPrint('susses: ${homeDateWaysMatches.length}');
+          return;
         }
-        scorePageLoading.value = false;
-        scoreOnLoadCalling.value = false;
-        homeAllDateWaysMatchesList.putIfAbsent(date, () => homeDateWaysMatches);
-        logPrint('susses: ${homeDateWaysMatches.length}');
-        return;
       },
       ifFailed: (error) {
         logPrint('error: ${error.message}');
@@ -109,14 +141,12 @@ class HomeController extends GetxController {
 
   void onLoadingDayAllMatches(String date) async {
     page++;
-    logPrint(
-        '${APIEndpoints.sportsBaseUrl}${APIEndpoints.fixturesUrl}date/$date?page=$page');
-
     getDateWaysMatchPagination(
-        date: date.toLowerCase() == "TODAY".toLowerCase()
-            ? fixtureDateFormateQuery(DateTime.now())
-            : date,
-        page: page);
+      date: date.toLowerCase() == "TODAY".toLowerCase()
+          ? fixtureDateFormateQuery(DateTime.now())
+          : date,
+      page: page,
+    );
   }
 
   Future<Map<String, List<MatchModel>>> getDateWaysMatchPagination({
@@ -136,13 +166,13 @@ class HomeController extends GetxController {
         }
       },
       queryParameters: {
-        'include': 'participants;scores;league.seasons;events.participant',
+        'include': 'participants;scores;league;periods',
         "page": page,
+        "per_page": 10
       },
       ifSucceed: (response) {
-        logPrint(
-            'Url: ${response.requestOptions.baseUrl}${response.requestOptions.path}');
         Map<String, dynamic> serverMap = response.data;
+
         MatchRes tempRes = MatchRes.fromJson(serverMap);
         (tempRes.data ?? [])
             .sort((a, b) => a.league!.name!.compareTo(b.league!.name!));

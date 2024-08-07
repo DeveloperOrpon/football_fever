@@ -30,6 +30,8 @@ dependencies:
   intl: ^0.19.0
   collection: ^1.18.0
   modal_bottom_sheet: ^3.0.0
+  material_floating_search_bar_2: ^0.5.0
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:

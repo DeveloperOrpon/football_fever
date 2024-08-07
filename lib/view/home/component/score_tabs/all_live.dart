@@ -33,46 +33,49 @@ class _AllLiveTabState extends State<AllLiveTab> {
           ? Center(
               child: LoadingWidget(size: 40.w),
             )
-          : SmartRefresher(
-              physics: const BouncingScrollPhysics(),
-              enablePullDown: true,
-              enablePullUp: true,
-              header: refreshLoading(context),
-              footer: customFooter,
-              controller: homeController.refreshControllerLiveMatches,
-              onRefresh: homeController.onRefreshLiveMatches,
-              onLoading: homeController.onLoadingLiveMatches,
-              child: ListView(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 15.w,
-                ),
-                children: [
-                  const TimeTile(
-                    date: 'Panel Live',
-                    onlyTitle: true,
+          : Padding(
+              padding: EdgeInsets.only(bottom: 110.h, right: 15.w, left: 10.w),
+              child: SmartRefresher(
+                physics: const BouncingScrollPhysics(),
+                enablePullDown: true,
+                enablePullUp: true,
+                header: refreshLoading(context),
+                footer: customFooter,
+                controller: homeController.refreshControllerLiveMatches,
+                onRefresh: homeController.onRefreshLiveMatches,
+                onLoading: homeController.onLoadingLiveMatches,
+                child: ListView(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 15.w,
                   ),
-                  NoDataCustomWidget(
-                    bottomSize: 20.h,
-                    onRefresh: () {},
-                    buttonText: 'Refresh',
-                    titleText: 'No Live Match Available',
-                  ),
-                  const TimeTile(
-                    date: 'Other Lives',
-                    onlyTitle: true,
-                  ),
-                  ...homeController.liveMatchList.map((matchModel) {
-                    return LiveMatchTile(matchModel: matchModel);
-                  }),
-                  if (homeController.liveMatchList.isEmpty)
+                  children: [
+                    const TimeTile(
+                      date: 'Panel Live',
+                      onlyTitle: true,
+                    ),
                     NoDataCustomWidget(
                       bottomSize: 20.h,
                       onRefresh: () {},
                       buttonText: 'Refresh',
                       titleText: 'No Live Match Available',
                     ),
-                  120.verticalSpace,
-                ],
+                    const TimeTile(
+                      date: 'Other Lives',
+                      onlyTitle: true,
+                    ),
+                    ...homeController.liveMatchList.map((matchModel) {
+                      return LiveMatchTile(matchModel: matchModel);
+                    }),
+                    if (homeController.liveMatchList.isEmpty)
+                      NoDataCustomWidget(
+                        bottomSize: 20.h,
+                        onRefresh: () {},
+                        buttonText: 'Refresh',
+                        titleText: 'No Live Match Available',
+                      ),
+                    120.verticalSpace,
+                  ],
+                ),
               ),
             );
     });

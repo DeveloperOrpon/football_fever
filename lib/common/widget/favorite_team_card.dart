@@ -33,7 +33,7 @@ class FavoriteTeamCard extends StatelessWidget {
               color: Get.theme.scaffoldBackgroundColor,
               borderRadius: BorderRadius.circular(100.r),
             ),
-            width: Get.width > 600 ? 70.w : 90.w,
+            width: Get.width > 600 ? 60.w : 80.w,
             height: 150.h,
             child: Stack(
               alignment: Alignment.center,
@@ -63,11 +63,14 @@ class FavoriteTeamCard extends StatelessWidget {
                   children: [
                     8.verticalSpace,
                     Container(
-                      height: 60.h,
+                      height: 50.h,
                       padding: EdgeInsets.symmetric(horizontal: 10.w),
-                      child: NetImageView(
-                        fit: BoxFit.contain,
-                        url: team.imagePath ?? '',
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(50.r),
+                        child: NetImageView(
+                          fit: BoxFit.contain,
+                          url: team.imagePath ?? '',
+                        ),
                       ),
                     ),
                     3.verticalSpace,

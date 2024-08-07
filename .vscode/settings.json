@@ -2,8 +2,11 @@
   "cSpell.words": [
     "behaviour",
     "cupertino",
+    "Debouncer",
+    "mpath",
     "navigationbar",
     "RGBO",
-    "screenutil"
+    "screenutil",
+    "sublist"
   ]
 }

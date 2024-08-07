@@ -17,7 +17,7 @@ class FollowingTab extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 70.h,
+            height: 64.h,
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             width: Get.width,
             decoration: BoxDecoration(

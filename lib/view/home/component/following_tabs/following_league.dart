@@ -5,11 +5,8 @@ import 'package:football_fever/common/widget/loading_widget.dart';
 import 'package:football_fever/common/widget/no_data.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
 import '../../../../appearance/loading/refresh_page.dart';
-import '../../../../common/dialog/show_add_team_dialog.dart';
 import '../../../../common/widget/favorite_league_card.dart';
-import '../../../../common/widget/favorite_team_card.dart';
 import '../../../following/controller/following_controller.dart';
 
 class FollowingLeague extends StatefulWidget {
@@ -62,7 +59,7 @@ class _FollowingLeagueState extends State<FollowingLeague> {
                       Text(
                         "MY FAVORITE'S",
                         style: Get.theme.textTheme.titleLarge!.copyWith(
-                          fontSize: 20.sp,
+                          fontSize: 16.sp,
                           color: Get.theme.primaryColor,
                           fontWeight: FontWeight.w600,
                         ),
@@ -178,7 +175,7 @@ class _FollowingLeagueState extends State<FollowingLeague> {
                       Text(
                         "OTHER LEAGUE'S",
                         style: Get.theme.textTheme.titleLarge!.copyWith(
-                          fontSize: 20.sp,
+                          fontSize: 16.sp,
                           color: Get.theme.primaryColor,
                           fontWeight: FontWeight.w600,
                         ),
@@ -211,12 +208,20 @@ class _FollowingLeagueState extends State<FollowingLeague> {
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: Get.width > 600 ? 5 : 4,
-                            mainAxisExtent: 180.h,
-                            crossAxisSpacing: Get.width > 600 ? 5.w : 0,
+                            mainAxisExtent: 170.h,
+                            crossAxisSpacing: Get.width > 600 ? 5.w : 8.w,
+                            mainAxisSpacing: 5.h,
                           ),
                           itemBuilder: (context, index) {
                             return FavoriteLeagueCard(
-                              isFavorite: false,
+                              isFavorite: followingController.favoriteLeagueList
+                                          .firstWhereOrNull((e) =>
+                                              e.id ==
+                                              followingController
+                                                  .allLeagueList[index].id) ==
+                                      null
+                                  ? false
+                                  : true,
                               league: followingController.allLeagueList[index],
                             );
                           },

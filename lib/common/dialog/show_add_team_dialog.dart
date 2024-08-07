@@ -167,16 +167,23 @@ class ModalWillScope extends StatelessWidget {
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: Get.width > 600 ? 5 : 4,
-                                  mainAxisExtent: 180.h,
-                                  crossAxisSpacing: Get.width > 600 ? 5.w : 0,
+                                  mainAxisExtent: 170.h,
+                                  crossAxisSpacing: Get.width > 600 ? 5.w : 8.w,
+                                  mainAxisSpacing: 5.h,
                                 ),
                                 itemBuilder: (context, index) {
                                   return Obx(() {
                                     return FavoriteTeamCard(
                                       isFavorite: followingController
-                                          .favoriteTeamList
-                                          .contains(followingController
-                                              .allTeamList[index]),
+                                                  .favoriteTeamList
+                                                  .firstWhereOrNull((e) =>
+                                                      e.id ==
+                                                      followingController
+                                                          .allTeamList[index]
+                                                          .id) ==
+                                              null
+                                          ? false
+                                          : true,
                                       team: followingController
                                           .allTeamList[index],
                                     );

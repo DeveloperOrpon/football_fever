@@ -40,12 +40,25 @@ class ScoreTab extends StatelessWidget {
                     color: Get.theme.disabledColor,
                     fontSize: Get.width > 600 ? 14.sp : null,
                   ),
-                  tabs: const [
-                    Tab(
+                  tabs: [
+                    const Tab(
                       text: 'ALL SCORES',
                     ),
                     Tab(
-                      text: 'ALL LIVES',
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text('ALL LIVES'),
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 5.h, left: 3.w),
+                            child: Icon(
+                              Icons.live_tv_rounded,
+                              size: 20.r,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ).animate().fadeIn(duration: 800.ms).slideX(

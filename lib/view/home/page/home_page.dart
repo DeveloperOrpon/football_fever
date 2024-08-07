@@ -6,6 +6,8 @@ import 'package:football_fever/appearance/image_const.dart';
 import 'package:football_fever/view/home/component/bottom_bar.dart';
 import 'package:football_fever/view/home/component/bottom_tab/following_tab.dart';
 import 'package:football_fever/view/home/component/bottom_tab/score_tab.dart';
+import 'package:football_fever/view/match/controller/match_controller.dart';
+import 'package:football_fever/view/news/page/news_page.dart';
 import 'package:get/get.dart';
 
 import '../controller/home_controller.dart';
@@ -16,6 +18,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeController homeController = Get.find();
+    MatchController matchController = Get.find();
     return Scaffold(
       backgroundColor: const Color(0xFFf9f9f9),
       body: Stack(
@@ -33,15 +36,15 @@ class HomePage extends StatelessWidget {
             direction: TextDirection.rtl,
             railTileConfig: RailTileConfig(
               iconSize: 25.r,
-              iconColor: Colors.white,
+              iconColor: const Color(0XFFfec142),
               expandedTextStyle: TextStyle(fontSize: 15.sp),
               collapsedTextStyle:
                   TextStyle(fontSize: 12.sp, color: Colors.white),
               activeColor: Colors.indigo,
-              iconPadding: EdgeInsets.symmetric(vertical: 5.h),
+              // iconPadding: EdgeInsets.symmetric(vertical: 5.h),
               hideCollapsedText: true,
             ),
-            cursorSize: Size(40.w, 80.h),
+            cursorSize: Size(60.w, 80.h),
             cursorActionType: CursorActionTrigger.clickAndDrag,
             item: Directionality(
               textDirection: TextDirection.ltr,
@@ -54,7 +57,7 @@ class HomePage extends StatelessWidget {
                   children: [
                     Container(
                       padding: EdgeInsets.only(
-                        left: 20.w,
+                        left: 10.w,
                         bottom: 10.h,
                       ),
                       color: Get.theme.scaffoldBackgroundColor,
@@ -77,7 +80,7 @@ class HomePage extends StatelessWidget {
                         children: const [
                           ScoreTab(),
                           FollowingTab(),
-                          Icon(Icons.home),
+                          NewsPage(),
                           Icon(Icons.home)
                         ],
                       ),

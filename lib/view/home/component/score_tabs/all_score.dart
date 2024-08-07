@@ -21,12 +21,12 @@ class AllScoreTab extends StatelessWidget {
     HomeController homeController = Get.find();
     return Obx(() {
       return Padding(
-        padding: EdgeInsets.only(bottom: 110.h),
+        padding: EdgeInsets.only(bottom: 110.h, right: 15.w, left: 10.w),
         child: SmartRefresher(
           physics: const BouncingScrollPhysics(),
           enablePullDown: true,
           enablePullUp: true,
-          header: refreshLoading(context),
+          header: refreshLoading(context, color: Get.theme.primaryColor),
           footer: customFooter,
           controller: homeController.refreshControllerAllScore,
           onRefresh: homeController.onRefreshAllScore,
@@ -54,8 +54,7 @@ class AllScoreTab extends StatelessWidget {
                                                   DateTime.now()) ==
                                               dateMatch.key
                                           ? 'TODAY'
-                                          : DateFormat('MMMM d, yyyy').format(
-                                              DateTime.parse(dateMatch.key)),
+                                          : dateMatch.key,
                                       matchCount:
                                           dateWayMatchCount(dateMatch.value),
                                     ),

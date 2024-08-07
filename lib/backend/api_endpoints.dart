@@ -8,4 +8,12 @@ class APIEndpoints {
   static const String liveScoresUrl = "livescores";
   static const String teamUrl = "teams";
   static const String leagueUrl = "leagues";
+  static const String searchTeamUrl = "teams/search/";
+  static const String getMatchPredictionUrl = "odds/pre-match/fixtures/";
+  static const String getFixtureSeasonIdsUrl = "seasons/";
+
+  ///news
+  static const String newsTodayURL = "news";
+  static const String leagueWaysURL = "news/by-category";
+  static const String leagueNewsByIdURL = "news/category";
 }

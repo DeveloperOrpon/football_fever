@@ -86,6 +86,7 @@ class MatchModel {
   bool? hasOdds;
   int? startingAtTimestamp;
   List<Participant>? participants;
+  final List<Period>? periods;
 
   ///NEW
   ///Participant
@@ -112,6 +113,7 @@ class MatchModel {
     this.startingAt,
     this.resultInfo,
     this.leg,
+    this.periods,
     this.details,
     this.length,
     this.placeholder,
@@ -179,6 +181,10 @@ class MatchModel {
             ? []
             : List<DataCoach>.from(
                 json["coaches"]!.map((x) => DataCoach.fromJson(x))),
+        periods: json["periods"] == null
+            ? []
+            : List<Period>.from(
+                json["periods"]!.map((x) => Period.fromJson(x))),
       );
     } catch (e) {
       log("MatchRes Error :$e ");
@@ -219,6 +225,110 @@ class MatchModel {
         "coaches": coaches == null
             ? []
             : List<dynamic>.from(coaches!.map((x) => x.toJson())),
+        "periods": periods == null
+            ? []
+            : List<dynamic>.from(periods!.map((x) => x.toJson())),
+      };
+}
+
+class Period {
+  final int? id;
+  final int? fixtureId;
+  final int? typeId;
+  final int? started;
+  final int? ended;
+  final int? countsFrom;
+  final bool? ticking;
+  final int? sortOrder;
+  // final Description? description;
+  final int? timeAdded;
+  final int? periodLength;
+  final int? minutes;
+  final int? seconds;
+  final bool? hasTimer;
+
+  Period({
+    this.id,
+    this.fixtureId,
+    this.typeId,
+    this.started,
+    this.ended,
+    this.countsFrom,
+    this.ticking,
+    this.sortOrder,
+    // this.description,
+    this.timeAdded,
+    this.periodLength,
+    this.minutes,
+    this.seconds,
+    this.hasTimer,
+  });
+
+  Period copyWith({
+    int? id,
+    int? fixtureId,
+    int? typeId,
+    int? started,
+    int? ended,
+    int? countsFrom,
+    bool? ticking,
+    int? sortOrder,
+    // Description? description,
+    int? timeAdded,
+    int? periodLength,
+    int? minutes,
+    int? seconds,
+    bool? hasTimer,
+  }) =>
+      Period(
+        id: id ?? this.id,
+        fixtureId: fixtureId ?? this.fixtureId,
+        typeId: typeId ?? this.typeId,
+        started: started ?? this.started,
+        ended: ended ?? this.ended,
+        countsFrom: countsFrom ?? this.countsFrom,
+        ticking: ticking ?? this.ticking,
+        sortOrder: sortOrder ?? this.sortOrder,
+        // description: description ?? this.description,
+        timeAdded: timeAdded ?? this.timeAdded,
+        periodLength: periodLength ?? this.periodLength,
+        minutes: minutes ?? this.minutes,
+        seconds: seconds ?? this.seconds,
+        hasTimer: hasTimer ?? this.hasTimer,
+      );
+
+  factory Period.fromJson(Map<String, dynamic> json) => Period(
+        id: json["id"],
+        fixtureId: json["fixture_id"],
+        typeId: json["type_id"],
+        started: json["started"],
+        ended: json["ended"],
+        countsFrom: json["counts_from"],
+        ticking: json["ticking"],
+        sortOrder: json["sort_order"],
+        // description: descriptionValues.map[json["description"]]!,
+        timeAdded: json["time_added"],
+        periodLength: json["period_length"],
+        minutes: json["minutes"],
+        seconds: json["seconds"],
+        hasTimer: json["has_timer"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "fixture_id": fixtureId,
+        "type_id": typeId,
+        "started": started,
+        "ended": ended,
+        "counts_from": countsFrom,
+        "ticking": ticking,
+        "sort_order": sortOrder,
+        // "description": descriptionValues.reverse[description],
+        "time_added": timeAdded,
+        "period_length": periodLength,
+        "minutes": minutes,
+        "seconds": seconds,
+        "has_timer": hasTimer,
       };
 }
 

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:football_fever/common/model/match_res.dart';
 import 'package:football_fever/view/match/page/date_ways_all_matches.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../clipper/tri_angle_clipper.dart';
 
@@ -55,7 +56,10 @@ class TimeTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      date,
+                      DateTime.tryParse(date) == null
+                          ? date
+                          : DateFormat('MMMM d, yyyy')
+                              .format(DateTime.parse(date)),
                       style: Get.theme.textTheme.titleLarge!.copyWith(
                         color: Get.theme.primaryColor,
                         fontWeight: FontWeight.w600,

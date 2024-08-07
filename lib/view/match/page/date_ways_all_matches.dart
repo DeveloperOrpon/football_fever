@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:football_fever/common/model/match_res.dart';
 import 'package:football_fever/common/widget/loading_widget.dart';
 import 'package:football_fever/common/widget/time_tile.dart';
+import 'package:football_fever/utils/helper/log.dart';
 import 'package:football_fever/view/home/controller/home_controller.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -36,6 +37,7 @@ class _DateWaysAllMatchesState extends State<DateWaysAllMatches> {
   void initState() {
     super.initState();
     addInitData();
+    logPrint("Date: ${widget.date}");
   }
 
   @override

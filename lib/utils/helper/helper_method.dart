@@ -28,6 +28,13 @@ String getMatchTimeFormate(int timestamp) {
   return formattedTime;
 }
 
+DateTime timeStampDate(int timestamp) {
+  int millisecondsSinceEpoch = timestamp * 1000;
+  DateTime dateTime =
+      DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
+  return dateTime;
+}
+
 String getMatchDateFormate(int timestamp) {
   int millisecondsSinceEpoch = timestamp * 1000;
   DateTime dateTime =
@@ -50,7 +57,7 @@ String getMatchResult(List<ScoreElement> scores) {
       .where((element) => element.description == Description.CURRENT)
       .toList();
   result =
-      '$result${currentScores.firstWhereOrNull((element) => element.score!.participant == Location.HOME)!.score!.goals} : ';
+      '$result${currentScores.firstWhereOrNull((element) => element.score!.participant == Location.HOME)!.score!.goals} - ';
   result =
       '$result${currentScores.firstWhereOrNull((element) => element.score!.participant == Location.AWAY)!.score!.goals}';
   return result;
@@ -60,4 +67,26 @@ String timestampToDateFormate(int timestamp, {String formate = 'ha d MMMM'}) {
   DateTime date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
   String formattedDate = DateFormat(formate).format(date);
   return formattedDate;
+}
+
+String secondToTimeDef(String s) {
+  DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(
+      (num.parse(s.toString()) * 1000).toInt());
+  return DateTime.now().difference(dateTime).inHours.toString();
+}
+
+RegExp htmlExp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+String getTimeStampParse(int timestamp) {
+  int millisecondsSinceEpoch = timestamp * 1000;
+  DateTime dateTime =
+      DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
+  String formattedTime = DateFormat('HH:mm').format(dateTime);
+  return formattedTime;
+}
+
+int probabilityCalculate(String probabilityString) {
+  double probabilityDouble =
+      double.parse(probabilityString.replaceAll('%', ''));
+  int probabilityInt = probabilityDouble.round();
+  return probabilityInt;
 }

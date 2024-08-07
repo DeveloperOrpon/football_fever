@@ -21,8 +21,8 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
   Widget build(BuildContext context) {
     return Obx(() {
       return SnakeNavigationBar.color(
-        elevation: 1,
-        shadowColor: Get.theme.shadowColor.withOpacity(.2),
+        elevation: 5,
+        shadowColor: Get.theme.shadowColor.withOpacity(.7),
         backgroundColor: Colors.white,
         height: 80.h,
         behaviour: SnakeBarBehaviour.floating,
@@ -33,6 +33,9 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
             topRight: const Radius.elliptical(60, 140),
             bottomLeft: Radius.circular(8.r),
             bottomRight: Radius.circular(8.r),
+          ),
+          side: BorderSide(
+            color: Get.theme.dividerColor.withOpacity(.01),
           ),
         ),
         padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 10.h),
