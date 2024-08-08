@@ -8,6 +8,8 @@ import 'dart:developer';
 import 'package:football_fever/common/model/season_match_res.dart';
 import 'package:football_fever/utils/helper/log.dart';
 
+import 'team_model_res.dart' as T;
+
 MatchRes matchResFromJson(String str) => MatchRes.fromJson(json.decode(str));
 
 String matchResToJson(MatchRes data) => json.encode(data.toJson());
@@ -569,6 +571,7 @@ class Lineup {
   num? formationPosition;
   String? playerName;
   num? jerseyNumber;
+  final PlayerModel? player;
 
   Lineup({
     this.id,
@@ -582,6 +585,7 @@ class Lineup {
     this.formationPosition,
     this.playerName,
     this.jerseyNumber,
+    this.player,
   });
 
   factory Lineup.fromJson(Map<String, dynamic> json) => Lineup(
@@ -596,6 +600,9 @@ class Lineup {
         formationPosition: json["formation_position"],
         playerName: json["player_name"],
         jerseyNumber: json["jersey_number"],
+        player: json["player"] == null
+            ? null
+            : PlayerModel.fromJson(json["player"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -610,6 +617,7 @@ class Lineup {
         "formation_position": formationPosition,
         "player_name": playerName,
         "jersey_number": jerseyNumber,
+        "player": player?.toJson(),
       };
 }
 

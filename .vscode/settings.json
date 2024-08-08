@@ -5,8 +5,10 @@
     "Debouncer",
     "mpath",
     "navigationbar",
+    "REDCARDS",
     "RGBO",
     "screenutil",
-    "sublist"
+    "sublist",
+    "topscorers"
   ]
 }

@@ -130,7 +130,7 @@ class _MatchScoreCustomWidgetState extends State<MatchScoreCustomWidget> {
                                       .toString(),
                                   height: widget.matchPredictionRes == null
                                       ? 65.h
-                                      : 45.h,
+                                      : 35.h,
                                   fit: BoxFit.contain,
                                 ),
                               ),
@@ -202,6 +202,7 @@ class _MatchScoreCustomWidgetState extends State<MatchScoreCustomWidget> {
                             Icon(
                               Icons.timer_outlined,
                               size: 20.r,
+                              color: Get.theme.disabledColor,
                             ),
                             2.horizontalSpace,
                             Text(
@@ -215,6 +216,7 @@ class _MatchScoreCustomWidgetState extends State<MatchScoreCustomWidget> {
                                   .bodySmall!
                                   .copyWith(
                                     fontSize: 12.sp,
+                                    color: Get.theme.disabledColor,
                                   ),
                             ),
                           ],
@@ -268,7 +270,7 @@ class _MatchScoreCustomWidgetState extends State<MatchScoreCustomWidget> {
                                       .toString(),
                                   height: widget.matchPredictionRes == null
                                       ? 65.h
-                                      : 45.h,
+                                      : 35.h,
                                   fit: BoxFit.contain,
                                 ),
                               ),
